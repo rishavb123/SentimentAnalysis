@@ -13,7 +13,7 @@ def create_lexicon(pos, neg, num_of_lines=10000000, min_occurrences = 50, max_oc
         with open(fi, 'r') as f:
             contents = f.readlines()
             for l in contents[:num_of_lines]:
-                words += list(nltk.tokenizer.word_tokenizer(l.lower()))
+                words += list(nltk.tokenize.word_tokenizer(l.lower()))
 
     words = [lemmatizer.lemmatize(word) for word in words]
     word_counts = Counter(words)
@@ -31,7 +31,7 @@ def create_features(sample, lexicon, classification, num_of_lines=10000000):
     with open(sample, 'r') as f:
         contents = f.readlines()
         for l in contents[:num_of_lines]:
-            current_words = nltk.tokenizer.word_tokenizer(l.lower())
+            current_words = nltk.tokenize.word_tokenizer(l.lower())
             current_words = [lemmatizer.lemmatize(word) for word in current_words]
             features = [0 for _ in range(len(lexicon))]
             for word in current_words:
