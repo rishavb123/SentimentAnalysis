@@ -5,7 +5,6 @@ import pickle
 
 from collections import Counter
 
-
 def create_lexicon(pos, neg, num_of_lines=10000000, min_occurrences = 50, max_occurrences=1000):
     lemmatizer = nltk.stem.WordNetLemmatizer()
     words = []
