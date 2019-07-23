@@ -20,7 +20,7 @@ def create_lexicon(pos, neg, num_of_lines=10000000, min_occurrences = 50, max_oc
     
     lexicon = []
     for w in word_counts:
-        if max_occurrences > w > min_occurrences:
+        if max_occurrences > word_counts[w] > min_occurrences:
             lexicon.append(w)
 
     return lexicon
@@ -45,7 +45,7 @@ def create_features(sample, lexicon, classification, num_of_lines=10000000):
 def structure_data(pos, neg, test_size = 0.1):
     lexicon = create_lexicon(pos, neg)
     
-    features = create_features(pos, [1, 0]) + create_features(neg, [0, 1])
+    features = create_features(pos, lexicon, [1, 0]) + create_features(neg, lexicon, [0, 1])
     random.shuffle(features)
     features = np.array(features)
     
