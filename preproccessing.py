@@ -13,7 +13,7 @@ def create_lexicon(pos, neg, num_of_lines=10000000, min_occurrences = 50, max_oc
         with open(fi, 'r') as f:
             contents = f.readlines()
             for l in contents[:num_of_lines]:
-                words += list(nltk.word_tokenizer(l.lower()))
+                words += list(nltk.tokenizer.word_tokenizer(l.lower()))
 
     words = [lemmatizer.lemmatize(word) for word in words]
     word_counts = Counter(words)
@@ -59,5 +59,15 @@ def structure_data(pos, neg, test_size = 0.1):
 
     return train_x, train_y, test_x, test_y
 
+def save_structured_data(pos, neg, data_file):
+    train_x, train_y, test_x, test_y = structure_data(pos, neg)
+    with open(data_file, 'wb') as f:
+        pickle.dump([train_x, train_y, test_x, test_y], f)
+
+def load_data(data_file):
+    with open(data_file, 'rb') as f:
+        [train_x, train_y, test_x, test_y] = pickle.load(f)
+    return train_x, train_y, test_x, test_y
+
 if __name__ == '__main__':
-    train_x, train_y, test_x, test_y = structure_data('./data/positive_strings.txt', './data/negative_strings.txt')
+    save_structured_data('./data/positive_strings.txt', './data/negative_strings.txt', './data/data.pkl')
